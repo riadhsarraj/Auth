@@ -6,4 +6,10 @@ export default () => ({
     database: {
         connectionString: process.env.MONGO_URI,
     },
+    email: {    
+        email: process.env.EMAIL,
+    },
+    password: {
+        password: process.env.EMAIL_PASSWORD,
+    },
 });
