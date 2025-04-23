@@ -8,13 +8,20 @@ import { RefreshToken, RefreshTokenSchema } from './schemas/refresh-token.schema
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ResetToken, ResetTokenSchema } from './schemas/reset-token.schema';
 import { MailService } from 'src/service/mail.service';
+import { SMSService } from 'src/service/sms.service';
+import { OTP, OTPSchema } from './schemas/otp.schema';
+import { PassportModule } from '@nestjs/passport';
+import { GoogleStrategy } from './strategies/google.strategy';
+import { AppleStrategy } from './strategies/apple.strategy';
 
 @Module({
   imports: [
+    PassportModule,
     MongooseModule.forFeature([
       {name: User.name, schema: UserSchema},
       {name: RefreshToken.name, schema: RefreshTokenSchema},
       {name: ResetToken.name, schema: ResetTokenSchema},
+      {name: OTP.name, schema: OTPSchema},
     ]),
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -26,7 +33,7 @@ import { MailService } from 'src/service/mail.service';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, MailService],
+  providers: [AuthService, MailService, SMSService, GoogleStrategy, AppleStrategy],
 })
 export class AuthModule {}
  

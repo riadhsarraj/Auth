@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Sign-In Test</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+    <div id="g_id_onload"
+         data-client_id=418950799390-k64hthb5th62h9f1qjbva1td1ajiklts.apps.googleusercontent.com
+         data-callback="handleCredentialResponse"
+         data-auto_prompt="false">
+    </div>
+    <div class="g_id_signin" 
+         data-type="standard"
+         data-size="large"
+         data-theme="outline"
+         data-text="sign_in_with"
+         data-shape="rectangular"
+         data-logo_alignment="left">
+    </div>
+
+    <script>
+        function handleCredentialResponse(response) {
+            const token = response.credential;
+            console.log('ID Token:', token);
+            // Display the token on the page
+            document.getElementById('token-display').textContent = token;
+        }
+    </script>
+
+    <div id="token-display" style="word-wrap: break-word; width: 500px; margin-top: 20px; padding: 10px; border: 1px solid #ccc;"></div>
+</body>
+</html> 

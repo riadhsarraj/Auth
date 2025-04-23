@@ -138,4 +138,43 @@ export class AuthService {
     
     
   }
+
+  async handleGoogleLogin(profile: any) {
+    let user = await this.userModel.findOne({ email: profile.email });
+
+    if (!user) {
+      user = await this.userModel.create({
+        email: profile.email,
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        picture: profile.picture,
+        provider: 'google',
+      });
+    }
+
+    const token = await this.generateToken(user._id);
+    return {
+      ...token,
+      userId: user._id,
+    };
+  }
+
+  async handleAppleLogin(profile: any) {
+    let user = await this.userModel.findOne({ email: profile.email });
+
+    if (!user) {
+      user = await this.userModel.create({
+        email: profile.email,
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        provider: 'apple',
+      });
+    }
+
+    const token = await this.generateToken(user._id);
+    return {
+      ...token,
+      userId: user._id,
+    };
+  }
 }
